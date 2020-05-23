@@ -6,8 +6,6 @@ import EventCard from './components/EventCard'
 
 
 const width: number = Dimensions.get('window').width
-const height: number = 425 * 100 / width
-const defaultPadding: number = 8
 
 const Stack = createSharedElementStackNavigator();
 
@@ -67,6 +65,9 @@ const DetailScreen = (props: any) => {
 };
 
 export default function App() {
+  fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(json => console.log(json))
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="List">
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 400
+    height: 208
   },
   detailTitle: {
     fontWeight: '500',
