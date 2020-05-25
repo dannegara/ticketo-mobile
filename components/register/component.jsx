@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 // import { CustomButton } from '../../UI/Button/Button';
 // import Input from '../../UI/Input/component';
-import Buttom from '../UI/Button';
+import Button from '../UI/Button';
 import Input from '../UI/Input';
 
 const formValidationSchema = Yup.object().shape({

@@ -7,12 +7,22 @@ import {
     Button
 } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
+import CloseButtom from '../UI/CloseButton';
 
 export default class extends Component<any> {
+
+    back = () => this.props.navigation.goBack();
+
     render() {
         const { item } = this.props.route.params;
         return (
             <View>
+                <CloseButtom style={{
+                    position: 'absolute',
+                    top: 20,
+                    left: 20,
+                    zIndex: 2
+                }} onPress={this.back} />
                 <SharedElement id={`item.${item.id}.photo`}>
                     <Image resizeMode="cover" source={{
                         uri: item.photoUrl
@@ -20,7 +30,7 @@ export default class extends Component<any> {
                 </SharedElement>
                 <Text style={styles.detailTitle}>{item.title}</Text>
                 <Button title="Login" onPress={() => this.props.navigation.navigate('Login')} />
-                <Button title="Back" onPress={() => this.props.navigation.goBack()} />
+                <Button title="Back" onPress={this.back} />
             </View>
         )
     }
