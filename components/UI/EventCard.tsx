@@ -18,9 +18,7 @@ export default (props: EventCardProps) => {
                     uri: photoUrl
                 }} />
             </SharedElement>
-            <SharedElement id={`item.${id}.title`}>
-                <Text style={styles.title}>{title}</Text>
-            </SharedElement>
+            <Text style={styles.title}>{title}</Text>
         </TouchableOpacity>
     )
 }
