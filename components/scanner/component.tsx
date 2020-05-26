@@ -27,7 +27,14 @@ export default class extends Component {
     handleBarCodeScanner = async ({ type, data: code }: BarCodeResult) => {
         const sound = new Audio.Sound();
         try {
-            await sound.loadAsync(require('../../assets/sounds/swiftly.mp3'));
+            //const soundName = true ? 'swiftly' : 'error';
+            let soundName;
+            if(false) {
+                soundName = require('../../assets/sounds/swiftly.mp3');
+            }else {
+                soundName = require('../../assets/sounds/error.mp3');
+            }
+            await sound.loadAsync(soundName);
             await sound.playAsync();
             this.setState({ scanned: true, showModal: true, code, successfully: true });
         } catch {
