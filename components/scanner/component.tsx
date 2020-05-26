@@ -31,6 +31,10 @@ export default class extends Component {
         ], { cancelable: false });
     }
 
+    closeModalHandler = () => {
+        console.log('pressing');
+    }
+
     render() {
         const { hasPermission, scanned } = this.state
         if(hasPermission === null)
@@ -47,7 +51,12 @@ export default class extends Component {
                     justifyContent: 'flex-end',
                 }}
             >
-                <ScannerModal />
+                <ScannerModal
+                    showModal={true}
+                    successfully={true}
+                    confirm={this.closeModalHandler}
+                    code={''}
+                />
                 <BarCodeScanner 
                     onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanner}
                     style={StyleSheet.absoluteFillObject}

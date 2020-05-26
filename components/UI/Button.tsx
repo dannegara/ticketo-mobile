@@ -4,10 +4,10 @@ import { yellow } from '../../helpers/constants';
 
 interface Props {
     title: string,
-    style: object,
-    textStyle: object,
+    style?: object,
+    textStyle?: object,
     onPress: () => void,
-    isLoading: boolean
+    isLoading?: boolean
 }
 
 export default (props: Props) => {
