@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-// import { CustomButton } from '../../UI/Button/Button';
-// import Input from '../../UI/Input/component';
 import Button from '../UI/Button';
 import Input from '../UI/Input';
 
@@ -111,7 +109,8 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 32
     },
     loginText: {
         color: 'blue',

@@ -16,10 +16,10 @@ export default class extends Component{
         this.setState({ isLoading: true });
         //Alert.alert(JSON.stringify(values));
         //Alert.alert(values.login);
-        // const { navigation } = this.props;
-        // setTimeout(() => {
-        //     navigation.navigate('Main');
-        // },1000);
+        const { navigation } = this.props;
+        setTimeout(() => {
+            navigation.navigate('Scanner');
+        },1000);
     }
     registerPageRedirect = () => {
         const { navigation } = this.props;
