@@ -1,7 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, Animated } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Button from './Button';
+
+const { height } = Dimensions.get('window');
 
 interface Props {
     showModal: boolean,
@@ -16,32 +18,63 @@ interface Icon {
 }
 
 const ICON_SIZE: number = 64;
+const SUCCESS_MESSAGE: string = 'Code successfully scanned';
+const ERROR_MESSAGE: string = 'Invalid code';
 
 export default (props: Props) => {
     const { showModal, successfully, confirm, code } = props;
+    const popUp = useRef(new Animated.Value(height)).current
 
     let icon: Icon = {
         name: "closecircle",
         color: "#de4d33"
     }
 
-    if(successfully)
+    let message = ERROR_MESSAGE;
+
+    if(successfully) {
         icon = {
             name: "checkcircle",
             color: "#49eb34"
         }
+        message = SUCCESS_MESSAGE;
+    }
+
+    useEffect(() => {
+        if(showModal)
+            Animated.timing(
+                popUp,
+                {
+                    toValue: 0,
+                    duration: 200
+                }
+            ).start()
+        else
+            Animated.timing(
+                popUp,
+                {
+                    toValue: height,
+                    duration: 200
+                }
+            ).start() 
+    }, [ showModal ]);
     
     return (
-        <View style={styles.container}>
+        <Animated.View style={{
+            ...styles.container,
+            transform: [
+                { translateY: popUp }
+            ]
+        }}>
             <View style={[StyleSheet.absoluteFill, styles.background]}></View>
             <View style={styles.modal}>
                 <AntDesign size={ICON_SIZE} style={styles.icon} {...icon} />
                 <Text style={styles.text}>Code Scanned</Text>
-                <Text style={styles.suplimentalText}>The code you scanned succesfully activated</Text>
+                <Text style={styles.suplimentalText}>{message}</Text>
                 <Text style={styles.suplimentalText}>Code: {code}</Text>
                 <Button title="Keep Scanning" onPress={confirm} style={styles.button} />
             </View>
-        </View>
+        </Animated.View>
     )
 }
 

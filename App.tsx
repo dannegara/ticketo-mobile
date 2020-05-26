@@ -4,7 +4,8 @@ import Routes from './routes';
 
 export default class App extends Component {
   state = {
-    appIsReady: false
+    appIsReady: false,
+    initalRoute: 'Login'
   }
 
   async componentDidMount() {
@@ -24,12 +25,13 @@ export default class App extends Component {
     }, 3000);
   }
   render() {
+    const { appIsReady, initalRoute } = this.state;
 
-    if(!this.state.appIsReady)
+    if(!appIsReady)
       return null;
 
     return (
-      <Routes />
+      <Routes initialRoute={initalRoute} />
     );
   }
 }

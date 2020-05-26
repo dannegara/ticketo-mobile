@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Audio } from 'expo-av';
 import ScannerModal from '../UI/Scanner-Modal';
 
 interface BarCodeResult{
@@ -12,7 +13,10 @@ export default class extends Component {
 
     state = {
         hasPermission: null,
-        scanned: false
+        scanned: false,
+        showModal: false,
+        successfully: false,
+        code: ''
     }
 
     async componentDidMount() {
@@ -20,23 +24,27 @@ export default class extends Component {
         this.setState({ hasPermission: status === 'granted' });
     }
 
-    handleBarCodeScanner = ({ type, data }: BarCodeResult) => {
-        this.setState({ scanned: true });
-        Alert.alert("Scanner", `type: ${type}, data: ${data}`,[
-            {
-                text: 'OK',
-                onPress: () => this.setState({ scanned: false }),
-                style: 'cancel'
-            }
-        ], { cancelable: false });
+    handleBarCodeScanner = async ({ type, data: code }: BarCodeResult) => {
+        const sound = new Audio.Sound();
+        try {
+            await sound.loadAsync(require('../../assets/sounds/swiftly.mp3'));
+            await sound.playAsync();
+            this.setState({ scanned: true, showModal: true, code, successfully: true });
+        } catch {
+            console.log('error playing sound');
+        }
     }
 
-    closeModalHandler = () => {
-        console.log('pressing');
-    }
+    closeModalHandler = () => this.setState({ showModal: false, scanned: false })
 
     render() {
-        const { hasPermission, scanned } = this.state
+        const {
+            hasPermission,
+            scanned,
+            showModal,
+            successfully,
+            code
+        } = this.state
         if(hasPermission === null)
             return <Text>Request for camera permission</Text>
 
@@ -52,10 +60,10 @@ export default class extends Component {
                 }}
             >
                 <ScannerModal
-                    showModal={true}
-                    successfully={true}
+                    showModal={showModal}
+                    successfully={successfully}
                     confirm={this.closeModalHandler}
-                    code={''}
+                    code={code}
                 />
                 <BarCodeScanner 
                     onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanner}

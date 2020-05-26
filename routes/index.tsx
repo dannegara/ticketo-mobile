@@ -10,11 +10,16 @@ import Scanner from '../components/scanner';
 
 const Stack = createStackNavigator();
 
-export default () => {
+interface Props {
+    initialRoute?: string
+}
+
+export default (props: Props) => {
+    const { initialRoute = 'Login' } = props;
     return (
         <NavigationContainer>
             <Stack.Navigator 
-                initialRouteName="Login"
+                initialRouteName={initialRoute}
                 screenOptions={{
                     headerShown: false
                 }}
